@@ -19,4 +19,14 @@ class CustomerRepository extends ServiceEntityRepository
         parent::__construct($registry, Customer::class);
     }
 
+    public function existsByEmail(string $email): bool
+    {
+        return null !== $this->findOneBy(['email' => $email]);
+    }
+
+    public function findByEmail(string $email): Customer
+    {
+        return $this->findOneBy(['email' => $email]);
+    }
+
 }

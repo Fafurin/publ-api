@@ -19,4 +19,12 @@ class UserTaskRepository extends ServiceEntityRepository
         parent::__construct($registry, UserTask::class);
     }
 
+    /**
+     * @return UserTask[]
+     */
+    public function findAllSortedByUpdatedAt(): array
+    {
+        return $this->findBy([], ['updatedAt' => 'DESC']);
+    }
+
 }

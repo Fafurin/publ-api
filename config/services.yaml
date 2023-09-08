@@ -4,16 +4,31 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    uploadDir: '%kernel.project_dir%/public/upload'
     exceptions:
         Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { code: 404 }
+        App\Exception\BookTypeNotFoundException: { code: 404, hidden: false }
+        App\Exception\BookTypeAlreadyExistsException: { code: 409, hidden: false }
+        App\Exception\BookNotFoundException: { code: 404, hidden: false }
+        App\Exception\BookOrderNotFoundException: { code: 404, hidden: false }
+        App\Exception\UserNotFoundException: { code: 404, hidden: false }
+        App\Exception\UserAlreadyExistsException: { code: 409, hidden: false }
+        App\Exception\StatusNotFoundException: { code: 404, hidden: false }
+        App\Exception\StatusAlreadyExistsException: { code: 409, hidden: false }
+        App\Exception\BookFormatAlreadyExistsException: { code: 409, hidden: false }
+        App\Exception\BookFormatNotFoundException: { code: 404, hidden: false }
+        App\Exception\PositionAlreadyExistsException: { code: 409, hidden: false }
+        App\Exception\PositionNotFoundException: { code: 404, hidden: false }
+        App\Exception\RequestBodyConvertException: { code: 400, hidden: false }
+        App\Exception\UploadFileInvalidTypeException: { code: 404, hidden: false }
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-    bind:
-        bool $isDebug: '%kernel.debug%'
+        bind:
+            bool $isDebug: '%kernel.debug%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -41,3 +56,6 @@ services:
     App\Listener\JwtCreatedListener:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created }
+
+    App\Service\UploadService:
+        arguments: ['%uploadDir%']
