@@ -6,7 +6,6 @@ use App\Traits\Title;
 
 class UserTaskFullDetailsResponse
 {
-
     use Title;
 
     private int $id;
@@ -33,6 +32,7 @@ class UserTaskFullDetailsResponse
     public function setId(int $id): self
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -44,24 +44,19 @@ class UserTaskFullDetailsResponse
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getUserName(): string
     {
         return $this->userName;
     }
 
-    /**
-     * @param string $userName
-     * @return UserTaskFullDetailsResponse
-     */
     public function setUserName(string $userName): self
     {
         $this->userName = $userName;
+
         return $this;
     }
 
@@ -124,5 +119,4 @@ class UserTaskFullDetailsResponse
 
         return $this;
     }
-
 }

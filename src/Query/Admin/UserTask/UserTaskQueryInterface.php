@@ -8,4 +8,6 @@ interface UserTaskQueryInterface
 {
     public function getAllTasksByUpdatedAt(): UserTaskListResponse;
 
+    public function getUserTasks(): UserTaskListResponse;
+
 }

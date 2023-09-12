@@ -14,17 +14,15 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use Throwable;
 
 class ApiExceptionListener
 {
     public function __construct(
         private ExceptionMappingResolver $resolver,
-        private LoggerInterface          $logger,
-        private SerializerInterface      $serializer,
-        private bool                     $isDebug
-    )
-    {
+        private LoggerInterface $logger,
+        private SerializerInterface $serializer,
+        private bool $isDebug
+    ) {
     }
 
     public function __invoke(ExceptionEvent $event): void
@@ -41,7 +39,7 @@ class ApiExceptionListener
         if ($mapping->getCode() >= Response::HTTP_INTERNAL_SERVER_ERROR || $mapping->isLoggable()) {
             $this->logger->error($throwable->getMessage(), [
                 'trace' => $throwable->getTraceAsString(),
-                'previous' => null !== $throwable->getPrevious() ? $throwable->getPrevious()->getMessage() : ''
+                'previous' => null !== $throwable->getPrevious() ? $throwable->getPrevious()->getMessage() : '',
             ]);
         }
 
@@ -52,7 +50,7 @@ class ApiExceptionListener
         $event->setResponse(new JsonResponse($data, $mapping->getCode(), [], true));
     }
 
-    private function isSecurityException(Throwable $throwable): bool
+    private function isSecurityException(\Throwable $throwable): bool
     {
         return $throwable instanceof AccessDeniedException || $throwable instanceof AuthenticationException;
     }

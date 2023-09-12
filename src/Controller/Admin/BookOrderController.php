@@ -9,7 +9,6 @@ use App\Model\Admin\BookOrder\BookOrderBriefDetailsRequest;
 use App\Model\Admin\BookOrder\BookOrderFullDetailsRequest;
 use App\Model\Admin\BookOrder\BookOrderFullDetailsResponse;
 use App\Model\Admin\BookOrder\BookOrderListResponse;
-use App\Model\Admin\BookOrder\SearchRequest;
 use App\Model\Error\ErrorResponse;
 use App\Query\Admin\BookOrder\BookOrderQueryInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -57,7 +56,7 @@ class BookOrderController extends AbstractController
 
         return $this->json([
             'message' => 'Order successfully saved to db',
-            'id' => $id
+            'id' => $id,
         ]);
     }
 
@@ -102,5 +101,4 @@ class BookOrderController extends AbstractController
 
         return $this->json(['message' => 'Book order successfully updated']);
     }
-
 }

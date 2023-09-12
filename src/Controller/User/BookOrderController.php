@@ -3,7 +3,7 @@
 namespace App\Controller\User;
 
 use App\Attribute\RequestBody;
-use App\Command\Admin\BookOrder\UpdateBookOrderInterface;
+use App\Command\User\BookOrder\UpdateBookOrderInterface;
 use App\Model\Admin\BookOrder\BookOrderFullDetailsResponse;
 use App\Model\Error\ErrorResponse;
 use App\Model\User\BookOrderRequest;
@@ -17,11 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookOrderController extends AbstractController
 {
     public function __construct(
-        private readonly BookOrderQueryInterface  $bookOrderQuery,
+        private readonly BookOrderQueryInterface $bookOrderQuery,
         private readonly UpdateBookOrderInterface $updateBookOrder,
     ) {
     }
-
 
     #[OA\Response(
         response: 200,
@@ -64,5 +63,4 @@ class BookOrderController extends AbstractController
 
         return $this->json(['message' => 'Book order successfully updated']);
     }
-
 }

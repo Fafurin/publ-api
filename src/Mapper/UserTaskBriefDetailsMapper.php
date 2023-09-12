@@ -10,7 +10,7 @@ use App\Model\User\UserListItem;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-// This mapper is designed to map output information about book order edit/view
+// This mapper is designed to map output information about book order in edit/view
 class UserTaskBriefDetailsMapper implements UserTaskBriefDetailsMapperInterface
 {
     public function map(array $tasks): UserTaskListResponse

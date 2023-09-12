@@ -8,6 +8,9 @@ class BookOrderRequest
 {
     use TitleRequest;
 
+    /**
+     * @var string[]
+     */
     private ?array $authors;
 
     private ?int $circulation;

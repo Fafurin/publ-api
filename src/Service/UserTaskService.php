@@ -4,15 +4,13 @@ namespace App\Service;
 
 use App\Repository\StatusRepository;
 use App\Repository\UserTaskRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UserTaskService
 {
+    private const COMPLETED_STATUS = 'Completed';
 
-    private const COMPLETED_STATUS = "Completed";
-
-    private const RESPONSE = "Task completed";
+    private const RESPONSE = 'Task completed';
 
     public function __construct(
         private readonly UserTaskRepository $userTaskRepository,
@@ -26,11 +24,10 @@ class UserTaskService
         $status = $this->statusRepository->findByTitle(self::COMPLETED_STATUS);
         $task = $this->userTaskRepository->find($id);
         $task->setStatus($status);
-        $task->setUpdatedAt(new DateTimeImmutable());
-        $task->setFinishedAt(new DateTimeImmutable());
+        $task->setUpdatedAt(new \DateTimeImmutable());
+        $task->setFinishedAt(new \DateTimeImmutable());
         $this->em->flush();
 
         return self::RESPONSE;
     }
-
 }

@@ -6,6 +6,7 @@ use App\Attribute\RequestBody;
 use App\Command\Admin\User\CreateUserInterface;
 use App\Model\Admin\User\SignUpRequest;
 use App\Model\Error\ErrorResponse;
+use App\Model\User\UserFullDetails;
 use App\Model\User\UserListResponse;
 use App\Query\Admin\User\UserQueryInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -16,9 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-
     public function __construct(
-        private readonly CreateUserInterface  $createUser,
+        private readonly CreateUserInterface $createUser,
         private readonly UserQueryInterface $userQuery,
     ) {
     }
@@ -52,23 +52,12 @@ class UserController extends AbstractController
 
     #[OA\Response(
         response: 200,
-        description: 'Return current user role',
+        description: 'Returns user info by id',
+        content: new Model(type: UserFullDetails::class)
     )]
-    #[Route('/api/v1/user/role', methods: ['GET'])]
-    public function role(): Response
+    #[Route('/api/v1/admin/users/{id}/view', methods: ['GET'])]
+    public function view(int $id): Response
     {
-        return $this->json($this->userQuery->getUserRole());
+        return $this->json($this->userQuery->getUserInfo($id));
     }
-
-    //    #[OA\Response(
-    //        response: 200,
-    //        description: 'Return book order',
-    //        content: new Model(type: UserFullDetails::class)
-    //    )]
-    //    #[Route('/api/v1/admin/users/{id}/view', methods: ['GET'])]
-    //    public function view(int $id): Response
-    //    {
-    //        return $this->json($this->service->getFullUserDetailsById($id));
-    //    }
-
 }

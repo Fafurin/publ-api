@@ -13,11 +13,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class CreateUser implements CreateUserInterface
 {
-
     public function __construct(
-        private readonly UserPasswordHasherInterface  $hasher,
-        private readonly UserRepository               $userRepository,
-        private readonly EntityManagerInterface       $entityManager,
+        private readonly UserPasswordHasherInterface $hasher,
+        private readonly UserRepository $userRepository,
+        private readonly EntityManagerInterface $entityManager,
         private readonly AuthenticationSuccessHandler $successHandler
     ) {
     }
@@ -35,13 +34,10 @@ class CreateUser implements CreateUserInterface
 
         $user->setPassword($this->hasher->hashPassword($user, $signUpRequest->getPassword()));
 
-
         $this->entityManager->persist($user);
 
         $this->entityManager->flush();
 
         return $this->successHandler->handleAuthenticationSuccess($user);
-
     }
-
 }

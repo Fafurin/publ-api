@@ -12,7 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-
     public function __construct(private readonly RoleServiceInterface $roleService)
     {
     }
@@ -30,17 +29,7 @@ class AdminController extends AbstractController
     public function grantModerator(int $userId): Response
     {
         $this->roleService->grantModerator($userId);
+
         return $this->json('Ok!');
     }
-
-//    #[OA\Response(
-//        response: 200,
-//        description: 'Return workroom of the current admin',
-//        content: new Model(type: UserFullDetails::class)
-//    )]
-//    #[Route('/api/v1/admin/workroom', methods: ['GET'])]
-//    public function workroom(): Response
-//    {
-//        return $this->json($this->service->getUserWorkroom());
-//    }
 }

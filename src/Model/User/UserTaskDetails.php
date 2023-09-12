@@ -6,7 +6,6 @@ use App\Model\Admin\BookOrder\BookOrderFullDetailsResponse;
 
 class UserTaskDetails
 {
-
     private int $id;
 
     private string $title;
@@ -41,6 +40,7 @@ class UserTaskDetails
     public function setId(int $id): self
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -52,6 +52,7 @@ class UserTaskDetails
     public function setStartedAt(?int $startedAt): self
     {
         $this->startedAt = $startedAt;
+
         return $this;
     }
 
@@ -102,5 +103,4 @@ class UserTaskDetails
 
         return $this;
     }
-
 }

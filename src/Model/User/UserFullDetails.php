@@ -2,9 +2,10 @@
 
 namespace App\Model\User;
 
+use App\Model\Admin\UserTask\UserTaskListResponse;
+
 class UserFullDetails
 {
-
     private int $id;
 
     private string $name;
@@ -21,8 +22,8 @@ class UserFullDetails
 
     private string $roles;
 
-    /** @var UserTaskDetails[]   */
-    private ?array $tasks;
+    /** @var UserTaskListResponse */
+    private UserTaskListResponse $tasks;
 
     public function getName(): string
     {
@@ -99,7 +100,6 @@ class UserFullDetails
     public function getBirthdate(): ?int
     {
         return $this->birthdate;
-
     }
 
     public function setBirthdate(?int $birthdate): self
@@ -110,18 +110,18 @@ class UserFullDetails
     }
 
     /**
-     * @return UserTaskDetails[]
+     * @return UserTaskListResponse|null
      */
-    public function getTasks(): ?array
+    public function getTasks(): ?UserTaskListResponse
     {
         return $this->tasks;
     }
 
     /**
-     * @param UserTaskDetails[] $tasks
+     * @param UserTaskListResponse|null $tasks
      * @return self
      */
-    public function setTasks(?array $tasks): self
+    public function setTasks(?UserTaskListResponse $tasks): self
     {
         $this->tasks = $tasks;
 
@@ -139,5 +139,4 @@ class UserFullDetails
 
         return $this;
     }
-
 }

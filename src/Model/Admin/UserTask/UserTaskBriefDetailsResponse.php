@@ -6,7 +6,6 @@ use App\Traits\Title;
 
 class UserTaskBriefDetailsResponse
 {
-
     use Title;
 
     private string $name;
@@ -22,5 +21,4 @@ class UserTaskBriefDetailsResponse
 
         return $this;
     }
-
 }
