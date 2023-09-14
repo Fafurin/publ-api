@@ -5,11 +5,9 @@ namespace App\Controller\Admin;
 use App\Attribute\RequestBody;
 use App\Command\Admin\Position\CreatePositionInterface;
 use App\Command\Admin\Position\DeletePositionInterface;
-use App\Command\Admin\Position\EditPositionInterface;
 use App\Command\Admin\Position\UpdatePositionInterface;
 use App\Model\Admin\Position\PositionListResponse;
 use App\Model\Admin\Position\PositionRequest;
-use App\Model\Admin\Position\PositionResponse;
 use App\Model\Error\ErrorResponse;
 use App\Query\Admin\Position\PositionQueryInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -20,11 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PositionController extends AbstractController
 {
-
     public function __construct(
-        private readonly PositionQueryInterface  $getPositions,
+        private readonly PositionQueryInterface $getPositions,
         private readonly CreatePositionInterface $createPosition,
-        private readonly EditPositionInterface   $editPosition,
         private readonly UpdatePositionInterface $updatePosition,
         private readonly DeletePositionInterface $deletePosition
     ) {
@@ -59,17 +55,6 @@ class PositionController extends AbstractController
         $this->createPosition->handle($request);
 
         return $this->json(['message' => 'Position successfully saved to db']);
-    }
-
-    #[OA\Response(
-        response: 200,
-        description: 'Return user position',
-        content: new Model(type: PositionResponse::class)
-    )]
-    #[Route('/api/v1/admin/positions/{id}/edit', methods: ['GET'])]
-    public function edit(int $id): Response
-    {
-        return $this->json($this->editPosition->handle($id));
     }
 
     #[OA\Response(

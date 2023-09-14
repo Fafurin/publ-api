@@ -4,10 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Attribute\RequestBody;
 use App\Command\Admin\UserTask\CreateUserTaskInterface;
-use App\Command\Admin\UserTask\EditUserTaskInterface;
 use App\Command\Admin\UserTask\UpdateUserTaskInterface;
 use App\Model\Admin\UserTask\UserTaskBriefDetailsRequest;
-use App\Model\Admin\UserTask\UserTaskBriefDetailsResponse;
 use App\Model\Admin\UserTask\UserTaskListResponse;
 use App\Model\Error\ErrorResponse;
 use App\Query\Admin\UserTask\UserTaskQueryInterface;
@@ -20,9 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserTaskController extends AbstractController
 {
     public function __construct(
-        private readonly UserTaskQueryInterface  $userTaskQuery,
+        private readonly UserTaskQueryInterface $userTaskQuery,
         private readonly CreateUserTaskInterface $createUserTask,
-        private readonly EditUserTaskInterface   $editUserTask,
         private readonly UpdateUserTaskInterface $updateUserTask,
     ) {
     }
@@ -60,17 +57,6 @@ class UserTaskController extends AbstractController
 
     #[OA\Response(
         response: 200,
-        description: 'Return user task',
-        content: new Model(type: UserTaskBriefDetailsResponse::class)
-    )]
-    #[Route('/api/v1/admin/task/{id}/edit', methods: ['GET'])]
-    public function edit(int $id): Response
-    {
-        return $this->json($this->editUserTask->handle($id));
-    }
-
-    #[OA\Response(
-        response: 200,
         description: 'Book format updated'
     )]
     #[OA\Response(
@@ -88,5 +74,4 @@ class UserTaskController extends AbstractController
 
         return $this->json(['message' => 'User task successfully updated']);
     }
-
 }

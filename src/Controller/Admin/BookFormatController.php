@@ -5,11 +5,9 @@ namespace App\Controller\Admin;
 use App\Attribute\RequestBody;
 use App\Command\Admin\BookFormat\CreateBookFormatInterface;
 use App\Command\Admin\BookFormat\DeleteBookFormatInterface;
-use App\Command\Admin\BookFormat\EditBookFormatInterface;
 use App\Command\Admin\BookFormat\UpdateBookFormatInterface;
 use App\Model\Admin\BookFormat\BookFormatListResponse;
 use App\Model\Admin\BookFormat\BookFormatRequest;
-use App\Model\Admin\BookFormat\BookFormatResponse;
 use App\Model\Error\ErrorResponse;
 use App\Query\Admin\BookFormat\BookFormatQueryInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -23,7 +21,6 @@ class BookFormatController extends AbstractController
     public function __construct(
         private readonly CreateBookFormatInterface $createBookFormat,
         private readonly UpdateBookFormatInterface $updateBookFormat,
-        private readonly EditBookFormatInterface $editBookFormat,
         private readonly DeleteBookFormatInterface $deleteBookFormat,
         private readonly BookFormatQueryInterface $getBookFormats
     ) {
@@ -62,17 +59,6 @@ class BookFormatController extends AbstractController
 
     #[OA\Response(
         response: 200,
-        description: 'Return book format',
-        content: new Model(type: BookFormatResponse::class)
-    )]
-    #[Route('/api/v1/admin/book/formats/{id}/edit', methods: ['GET'])]
-    public function edit(int $id): Response
-    {
-        return $this->json($this->editBookFormat->handle($id));
-    }
-
-    #[OA\Response(
-        response: 200,
         description: 'Book format updated'
     )]
     #[OA\Response(
@@ -102,5 +88,4 @@ class BookFormatController extends AbstractController
 
         return $this->json(['message' => 'Book format successfully deleted']);
     }
-
 }

@@ -5,11 +5,9 @@ namespace App\Controller\Admin;
 use App\Attribute\RequestBody;
 use App\Command\Admin\Status\CreateStatusInterface;
 use App\Command\Admin\Status\DeleteStatusInterface;
-use App\Command\Admin\Status\EditStatusInterface;
 use App\Command\Admin\Status\UpdateStatusInterface;
 use App\Model\Admin\Status\StatusListResponse;
 use App\Model\Admin\Status\StatusRequest;
-use App\Model\Admin\Status\StatusResponse;
 use App\Model\Error\ErrorResponse;
 use App\Query\Admin\Status\StatusQueryInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -20,11 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatusController extends AbstractController
 {
-
     public function __construct(
-        private readonly StatusQueryInterface  $getStatuses,
+        private readonly StatusQueryInterface $getStatuses,
         private readonly CreateStatusInterface $createStatus,
-        private readonly EditStatusInterface   $editStatus,
         private readonly UpdateStatusInterface $updateStatus,
         private readonly DeleteStatusInterface $deleteStatus
     ) {
@@ -59,17 +55,6 @@ class StatusController extends AbstractController
         $this->createStatus->handle($request);
 
         return $this->json(['message' => 'Status successfully saved to db']);
-    }
-
-    #[OA\Response(
-        response: 200,
-        description: 'Return status',
-        content: new Model(type: StatusResponse::class)
-    )]
-    #[Route('/api/v1/admin/statuses/{id}/edit', methods: ['GET'])]
-    public function edit(int $id): Response
-    {
-        return $this->json($this->editStatus->handle($id));
     }
 
     #[OA\Response(
