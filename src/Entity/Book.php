@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -23,8 +22,12 @@ class Book
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private ?array $authors = null;
 
+    #[ORM\OneToOne(inversedBy: 'book', targetEntity: BookOrder::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private BookOrder $bookOrder;
+
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?DateTimeInterface $publicationDate = null;
+    private ?\DateTimeInterface $publicationDate = null;
 
     #[ORM\ManyToOne(targetEntity: BookType::class)]
     private BookType $type;
@@ -87,12 +90,24 @@ class Book
         return $this;
     }
 
-    public function getPublicationDate(): ?DateTimeInterface
+    public function getBookOrder(): BookOrder
+    {
+        return $this->bookOrder;
+    }
+
+    public function setBookOrder(BookOrder $bookOrder): self
+    {
+        $this->bookOrder = $bookOrder;
+
+        return $this;
+    }
+
+    public function getPublicationDate(): ?\DateTimeInterface
     {
         return $this->publicationDate;
     }
 
-    public function setPublicationDate(?DateTimeInterface $publicationDate): self
+    public function setPublicationDate(?\DateTimeInterface $publicationDate): self
     {
         $this->publicationDate = $publicationDate;
 
@@ -193,7 +208,7 @@ class Book
 
     /**
      * @param Collection<BookFile> $bookFiles
-     * return self
+     *                                        return self
      */
     public function setBookFiles(Collection $bookFiles): self
     {
@@ -201,5 +216,4 @@ class Book
 
         return $this;
     }
-
 }

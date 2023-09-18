@@ -39,7 +39,7 @@ class StatusRepository extends ServiceEntityRepository
     }
 
 
-    public function findByTitle(string $title): Status
+    public function findByTitle(string $title): Status|null
     {
         return $this->findOneBy(['title' => $title]);
     }

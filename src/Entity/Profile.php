@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ProfileRepository;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,10 +21,10 @@ class Profile
     private ?string $address = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?DateTimeInterface $startedAt = null;
+    private ?\DateTimeInterface $startedAt = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?DateTimeInterface $birthdate = null;
+    private ?\DateTimeInterface $birthdate = null;
 
     public function getId(): ?int
     {
@@ -56,28 +55,27 @@ class Profile
         return $this;
     }
 
-    public function getStartedAt(): ?DateTimeInterface
+    public function getStartedAt(): ?\DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function setStartedAt(?DateTimeInterface $startedAt): self
+    public function setStartedAt(?\DateTimeInterface $startedAt): self
     {
         $this->startedAt = $startedAt;
 
         return $this;
     }
 
-    public function getBirthdate(): ?DateTimeInterface
+    public function getBirthdate(): ?\DateTimeInterface
     {
         return $this->birthdate;
     }
 
-    public function setBirthdate(?DateTimeInterface $birthdate): self
+    public function setBirthdate(?\DateTimeInterface $birthdate): self
     {
         $this->birthdate = $birthdate;
 
         return $this;
     }
-
 }

@@ -15,14 +15,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CreateBookOrder implements CreateBookOrderInterface
 {
-
     private const STATUS = 'Standing by';
 
     public function __construct(
-        private readonly CustomerRepository     $customerRepository,
-        private readonly BookFormatRepository   $bookFormatRepository,
-        private readonly BookTypeRepository     $bookTypeRepository,
-        private readonly StatusRepository       $statusRepository,
+        private readonly CustomerRepository $customerRepository,
+        private readonly BookFormatRepository $bookFormatRepository,
+        private readonly BookTypeRepository $bookTypeRepository,
+        private readonly StatusRepository $statusRepository,
         private readonly EntityManagerInterface $em
     ) {
     }
@@ -57,6 +56,8 @@ class CreateBookOrder implements CreateBookOrderInterface
 
         $this->em->persist($bookOrder);
 
+        $book->setBookOrder($bookOrder);
+
         $this->em->flush();
 
         return $bookOrder->getId();
@@ -64,14 +65,14 @@ class CreateBookOrder implements CreateBookOrderInterface
 
     private function setStatusPrePersist(): Status
     {
-        if ($this->statusRepository->findByTitle(self::STATUS)) {
+        if (null !== $this->statusRepository->findByTitle(self::STATUS)) {
             $status = $this->statusRepository->findByTitle(self::STATUS);
         } else {
             $status = (new Status())->setTitle(self::STATUS);
             $this->em->persist($status);
             $this->em->flush();
         }
+
         return $status;
     }
-
 }

@@ -16,6 +16,7 @@ class BookFullDetailsMapper implements BookFullDetailsMapperInterface
         return (new BookFullDetailsResponse())
             ->setTitle($book->getTitle())
             ->setAuthors($book->getAuthors())
+            ->setOrderId($book->getBookOrder()->getId())
             ->setIsbn($book->getIsbn())
             ->setCirculation($book->getCirculation())
             ->setFormat($book->getFormat()->getTitle())

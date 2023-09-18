@@ -24,13 +24,7 @@ class Customer
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $email = null;
 
-//    /**
-//     * @var Collection<BookOrder>
-//     */
-//    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: BookOrder::class)]
-//    private Collection $orders;
-
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ["default" => "false"])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 'false'])]
     private bool $isDeleted = false;
 
     public function getId(): ?int
@@ -86,20 +80,19 @@ class Customer
         return $this;
     }
 
-//    /**
-//     * @return Collection<BookOrder>
-//     */
-//    public function getOrders(): Collection
-//    {
-//        return $this->orders;
-//    }
-//
-//    /**
-//     * @param Collection<BookOrder> $orders
-//     */
-//    public function setOrders(Collection $orders): void
-//    {
-//        $this->orders = $orders;
-//    }
-
+    //    /**
+    //     * @return Collection<BookOrder>
+    //     */
+    //    public function getOrders(): Collection
+    //    {
+    //        return $this->orders;
+    //    }
+    //
+    //    /**
+    //     * @param Collection<BookOrder> $orders
+    //     */
+    //    public function setOrders(Collection $orders): void
+    //    {
+    //        $this->orders = $orders;
+    //    }
 }

@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\BookOrderRepository;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -26,18 +24,18 @@ class BookOrder
     #[ORM\JoinColumn(nullable: false)]
     private Customer $customer;
 
-    #[ORM\OneToOne(targetEntity: Book::class)]
+    #[ORM\OneToOne(mappedBy: 'bookOrder', targetEntity: Book::class)]
     #[ORM\JoinColumn(nullable: false)]
     private Book $book;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private DateTimeInterface $createdAt;
+    private \DateTimeInterface $createdAt;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?DateTimeInterface $updatedAt;
+    private ?\DateTimeInterface $updatedAt;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?DateTimeInterface $finishedAt = null;
+    private ?\DateTimeInterface $finishedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $deadline = null;
@@ -59,7 +57,7 @@ class BookOrder
     #[ORM\PrePersist]
     public function setStartedAtValue(): void
     {
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): int
@@ -86,36 +84,36 @@ class BookOrder
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?DateTimeInterface $createdAt): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getFinishedAt(): ?DateTimeInterface
+    public function getFinishedAt(): ?\DateTimeInterface
     {
         return $this->finishedAt;
     }
 
-    public function setFinishedAt(?DateTimeInterface $finishedAt): self
+    public function setFinishedAt(?\DateTimeInterface $finishedAt): self
     {
         $this->finishedAt = $finishedAt;
 
@@ -156,7 +154,7 @@ class BookOrder
 
     /**
      * @param Collection<UserTask> $userTasks
-     * return self
+     *                                        return self
      */
     public function setUserTasks(Collection $userTasks): self
     {
@@ -165,18 +163,11 @@ class BookOrder
         return $this;
     }
 
-    /**
-     * @return Customer
-     */
     public function getCustomer(): Customer
     {
         return $this->customer;
     }
 
-    /**
-     * @param Customer $customer
-     * @return self
-     */
     public function setCustomer(Customer $customer): self
     {
         $this->customer = $customer;
@@ -184,23 +175,15 @@ class BookOrder
         return $this;
     }
 
-    /**
-     * @return Book
-     */
     public function getBook(): Book
     {
         return $this->book;
     }
 
-    /**
-     * @param Book $book
-     * @return self
-     */
     public function setBook(Book $book): self
     {
         $this->book = $book;
 
         return $this;
     }
-
 }

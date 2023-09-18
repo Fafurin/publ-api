@@ -7,13 +7,14 @@ use App\Traits\Title;
 
 class BookFullDetailsResponse
 {
-
     use Title;
 
     /**
      * @var string[]
      */
     private array $authors;
+
+    private ?int $orderId;
 
     private ?string $isbn;
 
@@ -46,11 +47,22 @@ class BookFullDetailsResponse
 
     /**
      * @param string[] $authors
-     * @return self
      */
     public function setAuthors(?array $authors): self
     {
         $this->authors = $authors;
+
+        return $this;
+    }
+
+    public function getOrderId(): ?int
+    {
+        return $this->orderId;
+    }
+
+    public function setOrderId(?int $orderId): self
+    {
+        $this->orderId = $orderId;
 
         return $this;
     }
@@ -165,5 +177,4 @@ class BookFullDetailsResponse
 
         return $this;
     }
-
 }
