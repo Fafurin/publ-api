@@ -9,6 +9,8 @@ interface UserQueryInterface
 {
     public function getAllUsers(): UserListResponse;
 
-    public function getUserInfo(int $id): UserFullDetails;
+    public function getUserInfoById(int $id): UserFullDetails;
+
+    public function getCurrentUserInfo(): UserFullDetails;
 
 }

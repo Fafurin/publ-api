@@ -58,6 +58,17 @@ class UserController extends AbstractController
     #[Route('/api/v1/admin/users/{id}/view', methods: ['GET'])]
     public function view(int $id): Response
     {
-        return $this->json($this->userQuery->getUserInfo($id));
+        return $this->json($this->userQuery->getUserInfoById($id));
+    }
+
+    #[OA\Response(
+        response: 200,
+        description: 'Returns current user info',
+        content: new Model(type: UserFullDetails::class)
+    )]
+    #[Route('/api/v1/users/current', methods: ['GET'])]
+    public function info(): Response
+    {
+        return $this->json($this->userQuery->getCurrentUserInfo());
     }
 }

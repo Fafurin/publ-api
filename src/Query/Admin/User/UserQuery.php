@@ -8,12 +8,14 @@ use App\Model\User\UserFullDetails;
 use App\Model\User\UserListItem;
 use App\Model\User\UserListResponse;
 use App\Repository\UserRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class UserQuery implements UserQueryInterface
 {
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly UserTaskFullDetailsMapperInterface $userTaskFullDetailsMapper,
+        private readonly Security $security
     ) {
     }
 
@@ -33,7 +35,12 @@ class UserQuery implements UserQueryInterface
         return new UserListResponse($items);
     }
 
-    public function getUserInfo(int $id): UserFullDetails
+    public function getCurrentUserInfo(): UserFullDetails
+    {
+        return $this->getUserInfoById($this->security->getUser()->getId());
+    }
+
+    public function getUserInfoById(int $id): UserFullDetails
     {
         $user = $this->userRepository->find($id);
         $tasks = $this->userTaskFullDetailsMapper->map($user->getTasks()->toArray());
@@ -46,8 +53,7 @@ class UserQuery implements UserQueryInterface
             ->setPosition($user->getPosition()?->getTitle())
             ->setRoles(implode($user->getRoles()))
             ->setAddress($user->getProfile()?->getAddress())
-            ->setBirthdate($user->getProfile()?->getBirthdate()->getTimestamp())
+            ->setBirthdate($user->getProfile()->getBirthdate()?->getTimestamp())
             ->setTasks($tasks);
     }
-
 }
