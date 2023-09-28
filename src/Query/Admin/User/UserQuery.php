@@ -44,7 +44,6 @@ class UserQuery implements UserQueryInterface
     {
         $user = $this->userRepository->find($id);
         $tasks = $this->userTaskFullDetailsMapper->map($user->getTasks()->toArray());
-
         return (new UserFullDetails())
             ->setId($user->getId())
             ->setName($user->getName())
@@ -53,7 +52,7 @@ class UserQuery implements UserQueryInterface
             ->setPosition($user->getPosition()?->getTitle())
             ->setRoles(implode($user->getRoles()))
             ->setAddress($user->getProfile()?->getAddress())
-            ->setBirthdate($user->getProfile()->getBirthdate()?->getTimestamp())
+            ->setBirthdate($user->getProfile()?->getBirthdate()->getTimestamp())
             ->setTasks($tasks);
     }
 }
